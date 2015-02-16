@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+    <title>FRC Stats</title>
+    <script type='text/javascript' src='http://coffeescript.org/extras/coffee-script.js' charset='utf-8'></script>
+    <script type='text/javascript' src='http://d3js.org/d3.v3.min.js' charset='utf-8'></script>
+    <link href='css/bootstrap.min.css' rel='stylesheet'>
+    <link href='css/flat-ui.min.css' rel='stylesheet'>
+    <style>
+      h1 { font-size: 53px }
+      h2 { font-size: 40px }
+      h3 { font-size: 29px }
+      h4 { font-size: 28px }
+      h5 { font-size: 24px }
+      .section-header { margin-top: 0 }
+    </style>
+
+    <!--[if lt IE 9]>
+      <script src='js/html5shiv.js'></script>
+      <script src='js/respond.min.js'></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class='container'>
+      <header>
+        <h1>
+            FRC Stats
+            <br class='visible-xs' />
+            <small>by Thomas Clark</small>
+        </h1>
+      </header>
+      <div class='row'>
+        <div class='col-md-8'>
+          <div class='share'>
+            <svg>
+            </svg>
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <header>
+            <h2 class='section-header'>Matches</h2>
+          </header>
+          <select class='form-control select select-primary mbl' data-toggle='select'>
+            <option value='data/2015data.csv'>2015: Recycle Rush</option>
+            <option value='data/2014data.csv'>2014: Aerial Assist</option>
+            <option value='data/2013data.csv'>2013: Ultimate Ascent</option>
+          </select>
+          <select class='form-control select select-primary mbl' data-toggle='select'>
+            <option value='ALLEVENTS'>All Events</option>
+          </select>
+
+          <label class='checkbox'>
+            <input type='checkbox' value='asdf' data-toggle='checkbox'></input>
+            Practice
+          </label>
+          <label class='checkbox'>
+            <input type='checkbox' value='asdf' data-toggle='checkbox'></input>
+            Qualification
+          </label>
+          <label class='checkbox'>
+            <input type='checkbox' value='asdf' data-toggle='checkbox'></input>
+            Elimination
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <script src='js/jquery.min.js' charset='utf-8'></script>
+    <script src='js/flat-ui.min.js' charset='utf-8'></script>
+    <script src='js/d3.v3.min.js' charset='utf-8'></script>
+    <script src='js/frcstats.js' charset='utf-8'></script>
+    <script type='text/javascript'>
+      $('select').select2({dropdownCssClass: 'dropdown-inverse'});
+      $('[data-toggle="checkbox"]').radiocheck();
+    </script>
+  </body>
+</html>
