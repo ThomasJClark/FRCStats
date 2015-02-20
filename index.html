@@ -53,6 +53,23 @@
         vertical-align: -10%;
       }
 
+      svg text {
+        fill: #34495E;
+      }
+
+      g.tick line, path.domain {
+        fill: none;
+        stroke: #34495E;
+        stroke-width: 2px;
+      }
+
+      #histogramLabel {
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        color: #34495E;
+      }
+
       .footer-space, footer {
         height: 160px;
       }
@@ -81,7 +98,8 @@
       <div class='row'>
         <div class='col-md-8' style='margin-bottom: 1em;'>
           <div class='share' style='padding: 1em;'>
-            <div id='svgContainer'></div>
+            <div id='histogramContainer'></div>
+            <span id='histogramLabel'></span>
           </div>
         </div>
         <div class='col-md-4'>

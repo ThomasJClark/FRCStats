@@ -66,6 +66,15 @@ frcstats.histogram = () ->
         opacity: 1
 
 
+  my.xScale = () -> _xScale
+
+  my.yScale = () -> _yScale
+
+  my.widthScale = () -> _widthScale
+
+  my.heightScale = () -> _heightScale
+
+
   # Get/set the width of the rendered histogram
   my.width = (width) ->
     if not width
