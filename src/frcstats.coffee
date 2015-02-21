@@ -6,7 +6,9 @@ getRandomData = () ->
 
 $ ->
   svg = (d3.select '#histogramContainer').append 'svg'
-    .attr 'viewBox', '0 0 800 400'
+    .attr
+      viewBox: '0 0 800 400'
+      width: '100%'
 
   barGroup = svg.append 'g'
 
