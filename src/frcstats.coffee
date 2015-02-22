@@ -1,7 +1,7 @@
 getRandomData = () ->
-  sampleSize = 10 * Math.pow 10000, Math.random()
+  sampleSize = Math.pow 1000, Math.random()
   pdf = d3.random.bates 10
-  (pdf() for _ in d3.range sampleSize)
+  (100 * pdf() for _ in d3.range sampleSize)
 
 
 $ ->
@@ -18,6 +18,9 @@ $ ->
   label = (d3.select '#histogramLabel')
     .text 'Thing'
 
+  averageBubble = frcstats.infoBubble 'averageBubble'
+  testBubble = frcstats.infoBubble 'testBox'
+
   fsh = frcstats.histogram()
     .width 800
     .height 360
@@ -27,14 +30,30 @@ $ ->
     .tickPadding 8
 
   update = () ->
-    fsh.data getRandomData()
+    randomData = getRandomData()
 
+    fsh.data randomData
     axis.scale fsh.xScale()
     barGroup.call fsh
     axisGroup.transition()
       .duration 500
       .ease 'sin-in-out'
       .call axis
+
+    mean = Math.round (randomData.reduce (a, b) -> a + b) / randomData.length
+
+    x = fsh.xScale() mean
+    averageBubble
+      .x x
+      .y fsh.yScale() 0
+      .text "average = #{mean}"
+    svg.call averageBubble
+
+    testBubble
+      .x fsh.xScale() 40
+      .y fsh.yScale() 0
+      .text 'lol'
+    svg.call testBubble
 
   update()
   window.setInterval update, 1000
