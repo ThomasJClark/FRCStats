@@ -2,7 +2,7 @@
 #
 # Renders an animated histogram of values that uses color to show percentile
 # scores.
-if not frcstats then frcstats = {}
+frcstats = frcstats ? {}
 frcstats.histogram = () ->
   data = undefined
   bins = undefined

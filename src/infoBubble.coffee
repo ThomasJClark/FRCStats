@@ -2,7 +2,7 @@
 #
 # Shows a tiny green speech bubble to put text in.  This is used to annotate
 # the histogram with extra statistical information.
-if not frcstats then frcstats = {}
+frcstats = frcstats ? {}
 frcstats.infoBubble = (id) ->
   text = ''
   x = 0
