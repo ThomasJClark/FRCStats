@@ -63,11 +63,12 @@
         stroke-width: 2px;
       }
 
-      #histogramLabel {
-        display: block;
+      .share {
         text-align: center;
-        font-weight: bold;
-        color: #34495E;
+      }
+
+      #s2id_field {
+        margin-bottom: 0;
       }
 
       .footer-space, footer {
@@ -99,33 +100,38 @@
         <div class='col-md-8' style='margin-bottom: 1em;'>
           <div class='share' style='padding: 1em;'>
             <div id='histogramContainer'></div>
-            <span id='histogramLabel'></span>
+            <select id='field' class='form-control select select-primary' data-toggle='select'>
+              <option value='Final' selected>Final Points</option>
+              <option value='Teleop'>Teleoperated Points</option>
+              <option value='Auto'>Autonomous Points</option>
+              <option value='Foul'>Foul Points</option>
+            </select>
           </div>
         </div>
         <div class='col-md-4'>
           <header>
             <h2 class='section-header'>Matches</h2>
           </header>
-          <select class='form-control select select-primary mbl' data-toggle='select'>
+          <select id='dataUrl' class='form-control select select-primary mbl' data-toggle='select'>
             <option value='data/2015data.csv'>2015: Recycle Rush</option>
-            <option value='data/2014data.csv'>2014: Aerial Assist</option>
+            <option value='data/2014data.csv' selected>2014: Aerial Assist</option>
             <option value='data/2013data.csv'>2013: Ultimate Ascent</option>
           </select>
           <select class='form-control select select-primary mbl' data-toggle='select'>
             <option value='ALLEVENTS'>All Events</option>
           </select>
 
-          <label class='checkbox'>
-            <input type='checkbox' value='asdf' data-toggle='checkbox'></input>
-            Practice
+          <label class='radio'>
+            <input type='radio' name='matchType' value='P' data-toggle='radio'></input>
+            Practice Matches
           </label>
-          <label class='checkbox'>
-            <input type='checkbox' value='asdf' data-toggle='checkbox'></input>
-            Qualification
+          <label class='radio'>
+            <input type='radio' name='matchType' value='Q' data-toggle='radio' checked></input>
+            Qualification Matches
           </label>
-          <label class='checkbox'>
-            <input type='checkbox' value='asdf' data-toggle='checkbox'></input>
-            Elimination
+          <label class='radio'>
+            <input type='radio' name='matchType' value='E' data-toggle='radio'></input>
+            Elimination Matches
           </label>
         </div>
       </div>
@@ -148,6 +154,8 @@
     <script type='text/javascript'>
       $('select').select2({dropdownCssClass: 'dropdown-inverse', minimumResultsForSearch: -1});
       $('[data-toggle="checkbox"]').radiocheck();
+      $('[data-toggle="radio"]').radiocheck();
+      console.log($('[data-toggle="radio"]'));
     </script>
   </body>
 </html>
