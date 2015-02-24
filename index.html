@@ -67,6 +67,10 @@
         text-align: center;
       }
 
+      #filters .select {
+        width: 100%;
+      }
+
       #s2id_field {
         margin-bottom: 0;
       }
@@ -100,7 +104,7 @@
         <div class='col-md-8' style='margin-bottom: 1em;'>
           <div class='share' style='padding: 1em;'>
             <div id='histogramContainer'></div>
-            <select id='field' class='form-control select select-primary' data-toggle='select'>
+            <select id='field' class='form-control select select-primary'>
               <option value='Final' selected>Final Points</option>
               <option value='Teleop'>Teleoperated Points</option>
               <option value='Auto'>Autonomous Points</option>
@@ -108,16 +112,16 @@
             </select>
           </div>
         </div>
-        <div class='col-md-4'>
+        <div class='col-md-4' id='filters'>
           <header>
-            <h2 class='section-header'>Matches</h2>
+            <h2 class='section-header mtn'>Filter</h2>
           </header>
-          <select id='dataUrl' class='form-control select select-primary mbl' data-toggle='select'>
+          <select id='dataUrl' class='form-control select select-primary mbl'>
             <option value='data/2015data.csv'>2015: Recycle Rush</option>
             <option value='data/2014data.csv' selected>2014: Aerial Assist</option>
             <option value='data/2013data.csv'>2013: Ultimate Ascent</option>
           </select>
-          <select class='form-control select select-primary mbl' data-toggle='select'>
+          <select class='form-control select select-primary mbl'>
             <option value='ALLEVENTS'>All Events</option>
           </select>
 
@@ -152,10 +156,11 @@
     <script src='js/d3.v3.min.js' charset='utf-8'></script>
     <script src='js/frcstats.js' charset='utf-8'></script>
     <script type='text/javascript'>
-      $('select').select2({dropdownCssClass: 'dropdown-inverse', minimumResultsForSearch: -1});
-      $('[data-toggle="checkbox"]').radiocheck();
-      $('[data-toggle="radio"]').radiocheck();
-      console.log($('[data-toggle="radio"]'));
+      $(document).ready(function() {
+        $('select').select2({minimumResultsForSearch: -1});
+        $('[data-toggle="checkbox"]').radiocheck();
+        $('[data-toggle="radio"]').radiocheck();
+      });
     </script>
   </body>
 </html>
