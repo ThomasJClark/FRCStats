@@ -116,14 +116,13 @@
           <header>
             <h2 class='section-header mtn'>Filter</h2>
           </header>
-          <select id='dataUrl' class='form-control select select-primary mbl'>
+          <select id='year' class='form-control select select-primary mbl'>
             <option value='data/2015data.csv'>2015: Recycle Rush</option>
             <option value='data/2014data.csv' selected>2014: Aerial Assist</option>
             <option value='data/2013data.csv'>2013: Ultimate Ascent</option>
           </select>
-          <select class='form-control select select-primary mbl'>
-            <option value='ALLEVENTS'>All Events</option>
-          </select>
+          <input type='hidden' id='event' value='' class='form-control select select-primary mbl'>
+          </input>
 
           <label class='radio'>
             <input type='radio' name='matchType' value='P' data-toggle='radio'></input>
@@ -157,7 +156,7 @@
     <script src='js/frcstats.js' charset='utf-8'></script>
     <script type='text/javascript'>
       $(document).ready(function() {
-        $('select').select2({minimumResultsForSearch: -1});
+        $('#field, #year').select2({minimumResultsForSearch: -1});
         $('[data-toggle="checkbox"]').radiocheck();
         $('[data-toggle="radio"]').radiocheck();
       });

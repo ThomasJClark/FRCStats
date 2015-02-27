@@ -15,6 +15,12 @@ $ ->
   axis = d3.svg.axis()
   bubble = frcstats.infoBubble 'averageBubble'
 
+  eventsList = []
+  $('#event').select2
+    placeholder: 'Select an Event'
+    data: () -> { results: eventsList }
+
+
   # Updates all of the visual components (the histogram, axis, etc) with new
   # data.
   # @param {data} An array of numbers containing the data to show
@@ -53,12 +59,21 @@ $ ->
 
       redField = "red#{ field }"
       blueField = "blue#{ field }"
-      data = []
-      for row in rows when row.type is matchType
-        data.push row[redField]
-        data.push row[blueField]
+      event = ($ '#event').val() or 'All Events'
+      scores = []
+      events = d3.set ['All Events']
 
-      updateView data
+      for row in rows when row.type is matchType
+        if event is row.event or event is 'All Events'
+          scores.push row[redField]
+          scores.push row[blueField]
+        events.add row.event
+
+      updateView scores
+
+      # Set the event <select> to show all of the events for the currently
+      # selected year.
+      eventsList = ({ id: event, text: event } for event in events.values())
 
     rows = cache[dataUrl]
     if rows? then get rows else (d3.csv dataUrl).get (error, rows) -> get rows
@@ -66,9 +81,16 @@ $ ->
 
   # Call setData() with parameters from the user interface fields
   onChange = () ->
-    setData ($ '#dataUrl').val(),
+    setData ($ '#year').val(),
             ($ 'input[name=matchType]:checked').val(),
             ($ '#field').val()
 
-  ($ '#dataUrl, #field, input[name=matchType]').on 'change', onChange
+  # The list of events changes from year to year, so if a different year is
+  # selected, remove the event filter before updating the data.
+  ($ '#year').on 'change', () ->
+    ($ '#event').select2 'val', 'All Events'
+    onChange()
+
+  # If any other field changes, immediately update the data.
+  ($ '#field, input[name=matchType], #event').on 'change', onChange
   onChange()
