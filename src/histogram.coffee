@@ -77,7 +77,7 @@ frcstats.histogram = () ->
 
   # Get/set the width of the rendered histogram
   my.width = (_width) ->
-    if not _width
+    if not _width?
       width
     else
       width = _width
@@ -88,7 +88,7 @@ frcstats.histogram = () ->
 
   # Get/set the height of the rendered histogram
   my.height = (_height) ->
-    if not _height
+    if not _height?
       height
     else
       height = _height
@@ -99,7 +99,7 @@ frcstats.histogram = () ->
 
   # Get/set an array of values to compute the histogram of
   my.data = (_data) ->
-    if not _data
+    if not _data?
       data
     else
       data = _data

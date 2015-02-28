@@ -52,7 +52,7 @@ frcstats.infoBubble = (id) ->
 
   # Get/set the text to show inside of the infoBubble
   my.text = (_text) ->
-    if not _text
+    if not _text?
       text
     else
       text = _text
@@ -60,7 +60,7 @@ frcstats.infoBubble = (id) ->
 
   # Get/set the x position of the tip of the point.
   my.x = (_x) ->
-    if not _x
+    if not _x?
       x
     else
       x = _x
@@ -69,7 +69,7 @@ frcstats.infoBubble = (id) ->
   # Get/set the y positio of the tip of the point.  The actual bubble is
   # rendered above this point.
   my.y = (_y) ->
-    if not _y
+    if not _y?
       y
     else
       y = _y

@@ -13,7 +13,9 @@ $ ->
     .width 800
     .height 360
   axis = d3.svg.axis()
-  bubble = frcstats.infoBubble 'averageBubble'
+  medianBubble = frcstats.infoBubble 'medianBubble'
+  firstQuartileBubble = frcstats.infoBubble 'firstQuartileBubble'
+  thirdQuartileBubble = frcstats.infoBubble 'thirdQuartileBubble'
 
   eventsList = []
   $('#event').select2
@@ -37,14 +39,28 @@ $ ->
       .ease 'sin-in-out'
       .call axis
 
-    # Update the text bubble that shows what the average score is
-    mean = (Math.round 10 * d3.mean data) / 10
-    bubble
-      .x histogram.xScale() mean
+    # Update the text bubbles that show the interquartile range
+    data.sort (a, b) -> a - b
+    median = d3.median data
+    firstQuartile = d3.quantile data, 0.25
+    thirdQuartile = d3.quantile data, 0.75
+
+    medianBubble
+      .x histogram.xScale() median
       .y histogram.yScale() 0
-      .text "average = #{ mean }"
-    histogramGroup
-      .call bubble
+      .text "median = #{ median }"
+    firstQuartileBubble
+      .x histogram.xScale() firstQuartile
+      .y (histogram.yScale() 0) - 50
+      .text "25th = #{ firstQuartile }"
+    thirdQuartileBubble
+      .x histogram.xScale() thirdQuartile
+      .y (histogram.yScale() 0) - 50
+      .text "75th = #{ thirdQuartile }"
+
+    histogramGroup.call medianBubble
+    histogramGroup.call firstQuartileBubble
+    histogramGroup.call thirdQuartileBubble
 
 
   # @param {dataUrl} The URL passed to d3.csv to load the match data from
