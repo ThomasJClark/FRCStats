@@ -6,11 +6,19 @@ $ ->
     .style
       overflow: 'visible'
 
-  histogramGroup = (svg.append 'g').attr 'transform', 'translate(0, 0)'
-  axisGroup = (svg.append 'g').attr 'transform', 'translate(0, 364)'
+  histogramGroup = (svg.append 'g').attr 'transform', 'translate(32, 0)'
+  axisGroup = (svg.append 'g').attr 'transform', 'translate(32, 364)'
+  labelText = (svg.append 'text')
+    .text 'Frequency'
+    .style
+      'dominant-baseline': 'hanging'
+      'text-anchor': 'middle'
+      'fill': '#34495E'
+    .attr
+      transform: 'translate(0, 200) rotate(-90)'
 
   histogram = frcstats.histogram()
-    .width 800
+    .width 800 - 32
     .height 360
   axis = d3.svg.axis()
   medianBubble = frcstats.infoBubble 'medianBubble'
