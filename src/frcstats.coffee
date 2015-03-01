@@ -41,22 +41,22 @@ $ ->
 
     # Update the text bubbles that show the interquartile range
     data.sort (a, b) -> a - b
-    median = d3.median data
-    firstQuartile = d3.quantile data, 0.25
-    thirdQuartile = d3.quantile data, 0.75
+    median = Math.round d3.median data
+    firstQuartile = Math.round d3.quantile data, 0.25
+    thirdQuartile = Math.round d3.quantile data, 0.75
 
     medianBubble
       .x histogram.xScale() median
       .y histogram.yScale() 0
-      .text "median = #{ median }"
+      .text "median = #{ median }pts"
     firstQuartileBubble
       .x histogram.xScale() firstQuartile
-      .y (histogram.yScale() 0) - 50
-      .text "25th = #{ firstQuartile }"
+      .y histogram.yScale() 0
+      .text "25th percentile = #{ firstQuartile }pts"
     thirdQuartileBubble
       .x histogram.xScale() thirdQuartile
-      .y (histogram.yScale() 0) - 50
-      .text "75th = #{ thirdQuartile }"
+      .y histogram.yScale() 0
+      .text "75th percentile = #{ thirdQuartile }pts"
 
     histogramGroup.call medianBubble
     histogramGroup.call firstQuartileBubble

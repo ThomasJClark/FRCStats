@@ -14,19 +14,26 @@ frcstats.infoBubble = (id) ->
 
     enter = infoBubble.enter().append 'g'
       .attr 'id', id
-      # In case this is covering something up, turn transparent when the mouse
-      # is over it.
-      .on 'mouseover', () -> (d3.select this).attr 'opacity', 0.25
-      .on 'mouseout',  () -> (d3.select this).attr 'opacity', 1.0
-    enter.append 'rect'
-      .style 'fill', '#1ABC9C'
-    enter.append 'path'
-      .style 'fill', '#1ABC9C'
-      .attr 'd', 'M 0 0 L 8 -24 L -8 -24 Z'
-    enter.append 'text'
-      .style 'fill', 'White'
-      .style 'text-anchor', 'middle'
-      .attr { x: 0, y: -24 }
+      # Only show the whole bubble when it's moused over.
+      .on 'mouseover', () ->
+        bubbleRect.attr 'display', 'inline'
+        bubbleText.attr 'display', 'inline'
+      .on 'mouseout',  () ->
+        bubbleRect.attr 'display', 'none'
+        bubbleText.attr 'display', 'none'
+
+    if enter.node()
+      bubbleRect = enter.append 'rect'
+        .style 'fill', '#1ABC9C'
+        .attr 'display', 'none'
+      bubbleTip = enter.append 'path'
+        .style 'fill', '#1ABC9C'
+        .attr 'd', 'M 0 0 L 8 -24 L -8 -24 Z'
+      bubbleText = enter.append 'text'
+        .style 'fill', 'White'
+        .style 'text-anchor', 'middle'
+        .attr { x: 0, y: -24 }
+        .attr 'display', 'none'
 
     # Move the entire bubble to the correct position
     infoBubble.transition()
@@ -39,8 +46,13 @@ frcstats.infoBubble = (id) ->
     (infoBubble.select 'text').text my.text()
 
     # The bubble's outer rectangle should fit the bounding box of the text,
-    # plus padding on each side.
+    # plus padding on each side. We have to temporarily set the text to display
+    # inline in order to get its bounds, since it might be hidden.
+    textDisplay = (infoBubble.select 'text').attr 'display'
+    (infoBubble.select 'text').attr 'display', 'inline'
     textBBox = (infoBubble.select 'text').node().getBBox()
+    (infoBubble.select 'text').attr 'display', textDisplay
+
     infoBubble.select 'rect'
       .attr
         rx: 3
