@@ -105,14 +105,23 @@ $ ->
 
   # Call setData() with parameters from the user interface fields
   onChange = () ->
+    # Temporary workaround -
+    # Disable practice matches for 2015, since TBA only reports
+    # elimination and qualification matches.
+    d3.select 'input[name=matchType][value=P]'
+      .attr 'disabled', ($ '#year').val() is 'data/2015data.csv' or undefined
+
     setData ($ '#year').val(),
             ($ 'input[name=matchType]:checked').val(),
             ($ '#field').val()
 
-  # The list of events changes from year to year, so if a different year is
-  # selected, remove the event filter before updating the data.
+  # The list of events changes from year to year, and the availabe match types
+  # is also different for each year.  So, if the selected year changes, reset
+  # those options before updating.
   ($ '#year').on 'change', () ->
     ($ '#event').select2 'val', 'All Events'
+    ($ 'input[name=matchType][value=Q]').click()
+
     onChange()
 
   # If any other field changes, immediately update the data.
