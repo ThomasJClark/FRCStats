@@ -7,6 +7,7 @@ $ ->
       overflow: 'visible'
 
   histogramGroup = (svg.append 'g').attr 'transform', 'translate(32, 0)'
+  bubbleGroup = (svg.append 'g').attr 'transform', 'translate(32, 0)'
   axisGroup = (svg.append 'g').attr 'transform', 'translate(32, 364)'
   labelText = (svg.append 'text')
     .text 'Frequency'
@@ -66,9 +67,9 @@ $ ->
       .y histogram.yScale() 0
       .text "75th percentile = #{ thirdQuartile }pts"
 
-    histogramGroup.call medianBubble
-    histogramGroup.call firstQuartileBubble
-    histogramGroup.call thirdQuartileBubble
+    bubbleGroup.call medianBubble
+    bubbleGroup.call firstQuartileBubble
+    bubbleGroup.call thirdQuartileBubble
 
 
   # @param {dataUrl} The URL passed to d3.csv to load the match data from
