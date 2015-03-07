@@ -22,38 +22,50 @@ frcstats.infoBubble = (id) ->
         bubbleRect.attr 'display', 'none'
         bubbleText.attr 'display', 'none'
 
-    if enter.node()
-      bubbleRect = enter.append 'rect'
-        .style 'fill', '#1ABC9C'
-        .attr 'display', 'none'
-      bubbleTip = enter.append 'path'
-        .style 'fill', '#1ABC9C'
-        .attr 'd', 'M 0 0 L 8 -24 L -8 -24 Z'
-      bubbleText = enter.append 'text'
-        .style 'fill', 'White'
-        .style 'text-anchor', 'middle'
-        .attr { x: 0, y: -24 }
-        .attr 'display', 'none'
-
-    # Move the entire bubble to the correct position
-    infoBubble.transition()
-      .duration 500
-      .ease 'sin-in-out'
+    enter.append 'rect'
+      .style 'fill', '#1ABC9C'
+      .attr 'display', 'none'
+    enter.append 'path'
+      .style 'fill', '#1ABC9C'
       .attr
+        d: 'M 0 0 L 8 -24 L -8 -24 Z'
         transform: "translate(#{ my.x() }, #{ my.y() })"
+    enter.append 'text'
+      .style 'fill', 'White'
+      .style 'text-anchor', 'middle'
+      .attr 'display', 'none'
 
-    # Update the text in the bubble
-    (infoBubble.select 'text').text my.text()
+    bubbleRect = infoBubble.select 'rect'
+    bubbleTip = infoBubble.select 'path'
+    bubbleText = infoBubble.select 'text'
+
+    # Update the text and position of the bubble
+    bubbleText
+      .text my.text()
+      .attr
+        x: my.x()
+        y: my.y() - 24
+
+    # Transition the tip to the new position
+    bubbleTip
+      .transition()
+        .duration 500
+        .ease 'sin-in-out'
+        .attr 'transform', "translate(#{ my.x() }, #{ my.y() })"
 
     # The bubble's outer rectangle should fit the bounding box of the text,
     # plus padding on each side. We have to temporarily set the text to display
     # inline in order to get its bounds, since it might be hidden.
-    textDisplay = (infoBubble.select 'text').attr 'display'
-    (infoBubble.select 'text').attr 'display', 'inline'
-    textBBox = (infoBubble.select 'text').node().getBBox()
-    (infoBubble.select 'text').attr 'display', textDisplay
+    textDisplay = bubbleText.attr 'display'
+    bubbleText.attr 'display', 'inline'
+    textBBox = bubbleText.node().getBBox()
+    bubbleText.attr 'display', textDisplay
 
-    infoBubble.select 'rect'
+    # If the text extends outside of the container, move it back inside.
+    bubbleText.attr 'transform', "translate(#{Math.max -textBBox.x, 0}, 0)"
+    textBBox.x = Math.max textBBox.x, 0
+
+    bubbleRect
       .attr
         rx: 3
         x: textBBox.x - 16

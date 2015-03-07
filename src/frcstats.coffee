@@ -3,8 +3,6 @@ $ ->
     .attr
       viewBox: '0 0 800 400'
       width: '100%'
-    .style
-      overflow: 'visible'
 
   histogramGroup = (svg.append 'g').attr 'transform', 'translate(32, 0)'
   bubbleGroup = (svg.append 'g').attr 'transform', 'translate(32, 0)'
